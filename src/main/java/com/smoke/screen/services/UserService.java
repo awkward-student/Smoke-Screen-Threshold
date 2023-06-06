@@ -8,6 +8,7 @@ public interface UserService {
 
 //	For User
 	UserDTO createUser(UserDTO userDto);
+	
 //	For Admin
 	UserDTO updateUser(UserDTO userDto, Integer userId);
 	UserDTO getUserById(Integer userId);

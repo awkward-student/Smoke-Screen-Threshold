@@ -2,6 +2,10 @@ package com.smoke.screen.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7763558685717699861L;
 	String resourceName;
 	String fieldName;
 	long fieldValue;
