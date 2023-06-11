@@ -1,8 +1,7 @@
 package com.smoke.screen.services;
 
-import java.util.List;
-
 import com.smoke.screen.payloads.SolutionDTO;
+import com.smoke.screen.payloads.SolutionResponse;
 
 public interface SolutionService {
 
@@ -11,7 +10,7 @@ public interface SolutionService {
 	
 //	For Admin
 	SolutionDTO getSolutionByUser(Integer userId);
-	List<SolutionDTO> getAllSolutions();
+	SolutionResponse getAllSolutions(Integer pageNumber,Integer pageSize,String sortBy,String sortDir);
 	void deleteSolution(Integer solutionId);
 	
 //	Not needed in current perspective but implemented as in for further requirements

@@ -6,12 +6,17 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.smoke.screen.entities.Solution;
 import com.smoke.screen.entities.User;
 import com.smoke.screen.exceptions.ResourceNotFoundException;
 import com.smoke.screen.payloads.SolutionDTO;
+import com.smoke.screen.payloads.SolutionResponse;
 import com.smoke.screen.repos.SolutionRepo;
 import com.smoke.screen.repos.UserRepo;
 import com.smoke.screen.services.SolutionService;
@@ -48,11 +53,23 @@ public class SolutionServiceImpl implements SolutionService {
 	}
 
 	@Override
-	public List<SolutionDTO> getAllSolutions() {
-		List<Solution> solutions = this.solutionRepo.findAll();
-		List<SolutionDTO> solutionDtos = solutions.stream().map(solution -> this.solutionToDto(solution))
+	public SolutionResponse getAllSolutions(Integer pageNumber,Integer pageSize,String sortBy,String sortDir) {
+
+		Sort sort = (sortDir.equalsIgnoreCase("asc")) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+		Pageable p = PageRequest.of(pageNumber, pageSize, sort);
+		Page<Solution> pageSolution = this.solutionRepo.findAll(p);
+		List<Solution> allSolutions = pageSolution.getContent();
+		List<SolutionDTO> solutionDtos = allSolutions.stream().map((solution) -> this.modelMapper.map(solution, SolutionDTO.class))
 				.collect(Collectors.toList());
-		return solutionDtos;
+		SolutionResponse solutionResponse = new SolutionResponse();
+		solutionResponse.setContent(solutionDtos);
+		solutionResponse.setPageNumber(pageSolution.getNumber());
+		solutionResponse.setPageSize(pageSolution.getSize());
+		solutionResponse.setTotalElements(pageSolution.getTotalElements());
+		solutionResponse.setTotalPages(pageSolution.getTotalPages());
+		solutionResponse.setLastPage(pageSolution.isLast());
+		
+		return solutionResponse;
 	}
 	
 	@Override

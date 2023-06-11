@@ -6,13 +6,17 @@ import com.smoke.screen.payloads.UserDTO;
 
 public interface UserService {
 
-//	For User
+	//	For User
+	
 	UserDTO createUser(UserDTO user);
 	
-//	For Admin
-	UserDTO updateUser(UserDTO user, Integer userId);
+	//	For Admin
+	
 	UserDTO getUserById(Integer userId);
 	List<UserDTO> getAllUsers();
-	void deleteUser(Integer userId);
 	
+	// Not needed but implemented
+	
+	void deleteUser(Integer userId);
+	UserDTO updateUser(UserDTO user, Integer userId);
 }
