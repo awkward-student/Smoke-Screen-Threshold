@@ -1,9 +1,13 @@
 package com.smoke.screen.payloads;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class UserDTO {
 
 	private int id;
+	@NotEmpty
 	private String name;
+	@NotEmpty
 	private String email;
 	private String password;
 	private String branch;

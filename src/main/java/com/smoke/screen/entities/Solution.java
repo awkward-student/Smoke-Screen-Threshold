@@ -1,5 +1,7 @@
 package com.smoke.screen.entities;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +14,7 @@ public class Solution {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	@OneToOne
 	private User user;
@@ -36,9 +38,11 @@ public class Solution {
 	@Column(nullable = true, length = 6)
 	private String langQ3;
 	
-	private int flashCount;
+	private Integer flashCount;
 
 	private String timeTaken;
+
+	private Date addedDate;
 
 //	No Args Constructor
 	
@@ -56,11 +60,11 @@ public class Solution {
 		this.user = user;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -112,11 +116,11 @@ public class Solution {
 		this.langQ3 = langQ3;
 	}
 
-	public int getFlashCount() {
+	public Integer getFlashCount() {
 		return flashCount;
 	}
 
-	public void setFlashCount(int flashCount) {
+	public void setFlashCount(Integer flashCount) {
 		this.flashCount = flashCount;
 	}
 
@@ -126,6 +130,14 @@ public class Solution {
 
 	public void setTimeTaken(String timeTaken) {
 		this.timeTaken = timeTaken;
+	}
+	
+	public Date getAddedDate() {
+		return addedDate;
+	}
+
+	public void setAddedDate(Date addedDate) {
+		this.addedDate = addedDate;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.smoke.screen.services.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,13 +29,14 @@ public class SolutionServiceImpl implements SolutionService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public SolutionDTO postSolution(SolutionDTO solutionDto, Integer userId) {
+	public SolutionDTO createSolution(SolutionDTO solutionDto, Integer userId) {
 		User user = this.userRepo.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "User Id", userId));
-		Solution solution = this.dtoToSolution(solutionDto);
+		Solution solution = this.modelMapper.map(solutionDto, Solution.class);
+		solution.setAddedDate(new Date());
 		solution.setUser(user);
-		Solution savedSolution = this.solutionRepo.save(solution);
-		return this.solutionToDto(savedSolution);
+		Solution postSolution = this.solutionRepo.save(solution);
+		return this.modelMapper.map(postSolution, SolutionDTO.class);
 	}
 
 	@Override
@@ -52,7 +54,16 @@ public class SolutionServiceImpl implements SolutionService {
 				.collect(Collectors.toList());
 		return solutionDtos;
 	}
+	
+	@Override
+	public void deleteSolution(Integer solutionId) {
+		Solution solution = this.solutionRepo.findById(solutionId)
+				.orElseThrow(() -> new ResourceNotFoundException("Solution", "Solution Id", solutionId));
+		this.solutionRepo.delete(solution);
+	}
 
+	// Not needed but implemented
+	
 	@Override
 	public SolutionDTO updateSolution(SolutionDTO solutionDto, Integer solutionId) {
 		Solution solution = this.solutionRepo.findById(solutionId)
@@ -70,19 +81,14 @@ public class SolutionServiceImpl implements SolutionService {
 	}
 
 	@Override
-	public void deleteSolution(Integer solutionId) {
-		Solution solution = this.solutionRepo.findById(solutionId)
-				.orElseThrow(() -> new ResourceNotFoundException("Solution", "Solution Id", solutionId));
-		this.solutionRepo.delete(solution);
-	}
-
-	@Override
 	public SolutionDTO getSolutionById(Integer solutionId) {
 		Solution solution = this.solutionRepo.findById(solutionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Solution", "Solution Id", solutionId));
 		return solutionToDto(solution);
 	}
 
+	// Mapping methods
+	
 	public Solution dtoToSolution(SolutionDTO solutionDto) {
 		Solution solution = this.modelMapper.map(solutionDto, Solution.class);
 		return solution;

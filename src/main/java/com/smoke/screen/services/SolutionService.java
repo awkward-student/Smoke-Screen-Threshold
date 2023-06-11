@@ -7,13 +7,14 @@ import com.smoke.screen.payloads.SolutionDTO;
 public interface SolutionService {
 
 //	For User
-	SolutionDTO postSolution(SolutionDTO solutionDto, Integer userId);
+	SolutionDTO createSolution(SolutionDTO solutionDto, Integer userId);
 	
 //	For Admin
 	SolutionDTO getSolutionByUser(Integer userId);
 	List<SolutionDTO> getAllSolutions();
+	void deleteSolution(Integer solutionId);
+	
 //	Not needed in current perspective but implemented as in for further requirements
 	SolutionDTO updateSolution(SolutionDTO solutionDto, Integer solutionId);
-	void deleteSolution(Integer solutionId);
 	SolutionDTO getSolutionById(Integer solutionId);
 }

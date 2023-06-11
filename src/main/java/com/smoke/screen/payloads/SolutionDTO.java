@@ -1,17 +1,20 @@
 package com.smoke.screen.payloads;
 
+import java.util.Date;
+
 public class SolutionDTO {
 
-	private int id;
-	private UserDTO userDto;
+	private Integer id;
+	private UserDTO user;
 	private String solutionQ1;
 	private String langQ1;
 	private String solutionQ2;
 	private String langQ2;
 	private String solutionQ3;
 	private String langQ3;
-	private int flashCount;
+	private Integer flashCount;
 	private String timeTaken;
+	private Date addedDate;
 
 //	No Args Constructor
 
@@ -21,20 +24,20 @@ public class SolutionDTO {
 
 //	Getters and Setters
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public UserDTO getUserDto() {
-		return userDto;
+	public UserDTO getUser() {
+		return user;
 	}
 
-	public void setUserDto(UserDTO userDto) {
-		this.userDto = userDto;
+	public void setUser(UserDTO user) {
+		this.user = user;
 	}
 
 	public String getSolutionQ1() {
@@ -85,11 +88,11 @@ public class SolutionDTO {
 		this.langQ3 = langQ3;
 	}
 
-	public int getFlashCount() {
+	public Integer getFlashCount() {
 		return flashCount;
 	}
 
-	public void setFlashCount(int flashCount) {
+	public void setFlashCount(Integer flashCount) {
 		this.flashCount = flashCount;
 	}
 
@@ -100,5 +103,14 @@ public class SolutionDTO {
 	public void setTimeTaken(String timeTaken) {
 		this.timeTaken = timeTaken;
 	}
+
+	public Date getAddedDate() {
+		return addedDate;
+	}
+
+	public void setAddedDate(Date addedDate) {
+		this.addedDate = addedDate;
+	}
+	
 
 }

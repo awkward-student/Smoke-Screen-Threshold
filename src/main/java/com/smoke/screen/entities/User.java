@@ -14,7 +14,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	@Column(nullable = false, length = 45)
 	private String name;
 	@Column(nullable = false, unique = true, length = 45)
@@ -24,7 +24,8 @@ public class User {
 	@Column(nullable = false, length = 7)
 	private String branch;
 	@Column(nullable = false, length = 2)
-	private int sem;
+	private Integer sem;
+	
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Solution solution;
 	
@@ -37,10 +38,10 @@ public class User {
 	
 //	Getters and Setters
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -67,10 +68,10 @@ public class User {
 	public void setBranch(String branch) {
 		this.branch = branch;
 	}
-	public int getSem() {
+	public Integer getSem() {
 		return sem;
 	}
-	public void setSem(int sem) {
+	public void setSem(Integer sem) {
 		this.sem = sem;
 	}
 	
