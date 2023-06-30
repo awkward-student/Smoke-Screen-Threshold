@@ -9,13 +9,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Solution {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-
+	
 	@OneToOne
 	private User user;
 

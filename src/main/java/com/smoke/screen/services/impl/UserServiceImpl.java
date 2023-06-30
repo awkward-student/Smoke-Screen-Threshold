@@ -1,17 +1,21 @@
-	package com.smoke.screen.services.impl;
+package com.smoke.screen.services.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.smoke.screen.entities.Role;
 import com.smoke.screen.entities.User;
 import com.smoke.screen.exceptions.ResourceNotFoundException;
 import com.smoke.screen.payloads.UserDTO;
+import com.smoke.screen.repos.RoleRepo;
 import com.smoke.screen.repos.UserRepo;
 import com.smoke.screen.services.UserService;
+import com.smoke.screen.utilities.AppConstants;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,12 +25,32 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private RoleRepo roleRepo;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public UserDTO createUser(UserDTO userDto) {
-		User user = this.dtoToUser(userDto);
-		User savedUser = this.userRepo.save(user);
-		return this.userToDto(savedUser);
+//		User user = this.dtoToUser(userDto);
+//		User savedUser = this.userRepo.save(user);
+//		return this.userToDto(savedUser);
+		
+		User user = this.modelMapper.map(userDto, User.class);
+
+		// encoded the password
+		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+
+		// roles
+		Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
+
+		user.getRoles().add(role);
+
+		User newUser = this.userRepo.save(user);
+
+		return this.modelMapper.map(newUser, UserDTO.class);
 	}
 
 	@Override
